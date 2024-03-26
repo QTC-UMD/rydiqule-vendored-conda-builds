@@ -3,7 +3,7 @@ name: Make and upload Conda packages
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - '*'
   schedule:
