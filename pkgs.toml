@@ -1,0 +1,39 @@
+[defaults]
+version = "latest"
+source = "pypi"
+noarch = true
+build_args = [] # --noarch will automatically be added if applicable
+# The below will only be used if noarch is False
+pythons = ["3.8", "3.9", "3.10", "3.11"]
+platforms = ["win-32", "win-64", "osx", "linux"]
+
+### only available on PyPI
+[arc-alkali-rydberg-calculator]
+noarch = false
+# BSD3
+
+[cyrk]
+noarch = false
+# CC BY-SA 4.0
+
+[numbakit-ode]
+# BSD
+
+[leveldiagram]
+# BSD3
+
+### available via conda-forge
+[asteval]
+# MIT
+
+[lmfit]
+# BSD3
+
+[uncertainties]
+# BSD
+
+#[windows-curses]
+#source = "git+https://github.com/zephyrproject-rtos/windows-curses/"
+#noarch = false
+#build_args = ["--from-downloaded-wheel"]
+#platforms = ["win-32", "win-64"]
