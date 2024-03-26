@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/QTC-UMD/rydiqule/main/docs/source/img/Rydiqule_Logo_Transparent_300.png" alt="rydiqule" style="max-width: 100%">
 
-# the _rydiqule_ » vendored-conda-builds
+# _rydiqule_ » vendored-conda-builds
 
 ### Conda builds of vendored packages for _rydiqule_
 
@@ -31,3 +31,5 @@ Please file an [issue](https://github.com/rydiqule/rydiqule-vendored-conda-build
 ## Methodology
 
 Whenever a new commit is pushed to this repository, the GitHub Action [`.github/workflows/make_packages.yml`](.github/workflows/make_packages.yml) runs the script [`make_packages.py`](make_packages.py), which executes the build of packages listed in [`pkgs.toml`](pkgs.toml). If the packages build sucessfully and the commit is tagged, the GitHub Action uploads them to the labscript-suite Anaconda Cloud repository. Additionally, the build and upload action is automatically run once per week on the latest tagged commit.
+
+This code is based on [vendored-conda-builds](https://github.com/labscript-suite/vendored-conda-builds).
