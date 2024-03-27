@@ -5,7 +5,7 @@
 ### Conda builds of vendored packages for _rydiqule_
 
 [![Actions Status](https://github.com/QTC-UMD/rydiqule-vendored-conda-builds/workflows/Make%20and%20upload%20Conda%20packages/badge.svg)](https://github.com/QTC-UMD/rydiqule-vendored-conda-builds/actions)
-[![License](https://img.shields.io/github/license/QTC-UMD/rydiqule-vendored-conda-builds)](https://github.com/QTC-UMD/rydiqule-vendored-conda-builds/raw/master/LICENSE.txt)
+[![License](https://img.shields.io/github/license/QTC-UMD/rydiqule-vendored-conda-builds)](https://github.com/QTC-UMD/rydiqule-vendored-conda-builds/raw/main/LICENSE.txt)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/QTC-UMD/rydiqule-vendored-conda-builds)](https://github.com/QTC-UMD/rydiqule-vendored-conda-builds/tags)
 
 
