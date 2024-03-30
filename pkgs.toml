@@ -9,11 +9,13 @@ platforms = ["win-32", "win-64", "osx", "linux"]
 
 ### only available on PyPI
 #[ARC-Alkali-Rydberg-Calculator]
+#source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 #noarch = false
 #platforms = ["linux"]
 # BSD3
 
 [CyRK]
+source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 platforms = ["linux"]
 # CC BY-SA 4.0
