@@ -21,28 +21,19 @@ jobs:
       matrix:
         include:
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
-          # - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
+          - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
           # - { os: ubuntu-latest,   python: '3.9',  arch: x64 }
           # - { os: ubuntu-latest,   python: '3.8',  arch: x64 }
-          # - { os: ubuntu-latest,   python: '3.7',  arch: x64 }
 
-          # - { os: macos-11,    python: '3.11',  arch: x64 }
+          - { os: macos-11,    python: '3.11',  arch: x64 }
           # - { os: macos-11,    python: '3.10',  arch: x64 }
           # - { os: macos-11,    python: '3.9',  arch: x64 }
           # - { os: macos-11,    python: '3.8',  arch: x64 }
-          # - { os: macos-11,    python: '3.7',  arch: x64 }
 
-          # - { os: windows-latest,  python: '3.11',  arch: x64 }
+          - { os: windows-latest,  python: '3.11',  arch: x64 }
           # - { os: windows-latest,  python: '3.10',  arch: x64 }
           # - { os: windows-latest,  python: '3.9',  arch: x64 }
           # - { os: windows-latest,  python: '3.8',  arch: x64 }
-          # - { os: windows-latest,  python: '3.7',  arch: x64 }
-
-          # - { os: windows-latest,  python: '3.11',  arch: x86 } # conda not yet available
-          # - { os: windows-latest,  python: '3.10',  arch: x86 }
-          # - { os: windows-latest,  python: '3.9',  arch: x86 }
-          # - { os: windows-latest,  python: '3.8',  arch: x86 }
-          # - { os: windows-latest,  python: '3.7',  arch: x86 }
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
