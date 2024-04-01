@@ -8,17 +8,19 @@ pythons = ["3.8", "3.9", "3.10", "3.11"]
 platforms = ["win-32", "win-64", "osx", "linux"]
 
 ### only available on PyPI
-#[ARC-Alkali-Rydberg-Calculator]
-#source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
-#noarch = false
-#platforms = ["linux"]
+[ARC-Alkali-Rydberg-Calculator]
+source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
+noarch = false
+build_args = ['--conda-name-differences=oldest-supported-numpy:numpy']
+platforms = ["linux"]
 # BSD3
 
-[CyRK]
-source = "git+https://github.com/jrenaud90/CyRK/"
-noarch = false
-build_args = ['--license-file=None'] # including license in meta-data breaks build
-platforms = ["linux"]
+#[CyRK]
+# setup.py needs multiprocessing __main__ protection on windows
+# full license txt in recipe breaks the build
+#source = "git+https://github.com/jrenaud90/CyRK/"
+#noarch = false
+#platforms = ["linux"]
 # CC BY-SA 4.0
 
 [numbakit-ode]
