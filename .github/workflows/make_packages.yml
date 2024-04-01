@@ -82,8 +82,8 @@ jobs:
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
-        with:
-          name: conda_packages
+        with: # v4 requires all artifact names are unique on upload
+          name: conda_packages-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.arch }}
           path: ./conda_packages
 
   upload:
@@ -92,11 +92,12 @@ jobs:
     needs: build
     steps:
       
-      - name: Download Artifact
+      - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: conda_packages
+          pattern: conda_packages-*
           path: ./conda_packages
+          merge-multiple: true
 
       - name: Install Miniconda
         uses: conda-incubator/setup-miniconda@v3
