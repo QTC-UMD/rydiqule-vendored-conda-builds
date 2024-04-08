@@ -15,12 +15,11 @@ build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
               '--from-wheel'] # build is not PEP-517 compatible, better to stick with pip for now
 # BSD3
 
-#[CyRK]
-# setup.py needs multiprocessing __main__ protection on windows
-# full license txt in recipe breaks the build
-#source = "git+https://github.com/jrenaud90/CyRK/"
-#noarch = false
-#platforms = ["linux"]
+[CyRK]
+source = "git+https://github.com/jrenaud90/CyRK/"
+noarch = false
+build_args = ["--license='CC BY-SA'", # override so full license text not used
+              "--from-wheel"] # non-standard build, rely on pip
 # CC BY-SA 4.0
 
 [numbakit-ode]
@@ -38,9 +37,3 @@ build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
 
 [uncertainties]
 # BSD
-
-#[windows-curses]
-#source = "git+https://github.com/zephyrproject-rtos/windows-curses/"
-#noarch = false
-#build_args = ["--from-downloaded-wheel"]
-#platforms = ["win-32", "win-64"]
