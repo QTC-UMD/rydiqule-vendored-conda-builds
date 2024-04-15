@@ -21,19 +21,20 @@ jobs:
       matrix:
         include:
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
-          - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
-          - { os: ubuntu-latest,   python: '3.9',  arch: x64 }
-          - { os: ubuntu-latest,   python: '3.8',  arch: x64 }
+          #- { os: ubuntu-latest,   python: '3.10',  arch: x64 }
+          #- { os: ubuntu-latest,   python: '3.9',  arch: x64 }
+          #- { os: ubuntu-latest,   python: '3.8',  arch: x64 }
 
-          - { os: macos-latest,    python: '3.11',  arch: x64 }
-          - { os: macos-latest,    python: '3.10',  arch: x64 }
-          - { os: macos-latest,    python: '3.9',  arch: x64 }
-          - { os: macos-latest,    python: '3.8',  arch: x64 }
+          #- { os: macos-latest,    python: '3.11',  arch: x64 }
+          #- { os: macos-latest,    python: '3.10',  arch: x64 }
+          #- { os: macos-latest,    python: '3.9',  arch: x64 }
+          #- { os: macos-latest,    python: '3.8',  arch: x64 }
+          - { os: macos-14,        python: '3.11',  arch: arm64}
 
-          - { os: windows-latest,  python: '3.11',  arch: x64 }
-          - { os: windows-latest,  python: '3.10',  arch: x64 }
-          - { os: windows-latest,  python: '3.9',  arch: x64 }
-          - { os: windows-latest,  python: '3.8',  arch: x64 }
+          #- { os: windows-latest,  python: '3.11',  arch: x64 }
+          #- { os: windows-latest,  python: '3.10',  arch: x64 }
+          #- { os: windows-latest,  python: '3.9',  arch: x64 }
+          #- { os: windows-latest,  python: '3.8',  arch: x64 }
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
@@ -60,7 +61,7 @@ jobs:
           architecture: ${{ matrix.arch }}
           miniconda-version: "latest"
           
-      - name: Workaround conda-build incompatibility with xcode 12+
+      - name: Configure xcode
         if: runner.os == 'macOS'
         uses: maxim-lobanov/setup-xcode@v1
         with:

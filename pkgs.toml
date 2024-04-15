@@ -5,7 +5,7 @@ noarch = true
 build_args = [] # --noarch will automatically be added if applicable
 # The below will only be used if noarch is False
 pythons = ["3.8", "3.9", "3.10", "3.11"]
-platforms = ["win-64", "osx", "linux"]
+platforms = ["win-64", "osx-64", "osx-arm64", "linux"]
 
 ### only available on PyPI
 [ARC-Alkali-Rydberg-Calculator]
@@ -13,6 +13,7 @@ source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
 build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
               '--from-wheel'] # build is not PEP-517 compatible, better to stick with pip for now
+platforms = ["osx-arm64"]
 # BSD3
 
 [CyRK]
@@ -20,6 +21,7 @@ source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-wheel"] # non-standard build, rely on pip
+platforms = ["osx-arm64"]
 # CC BY-SA 4.0
 
 [numbakit-ode]
