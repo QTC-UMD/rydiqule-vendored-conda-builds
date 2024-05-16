@@ -72,14 +72,10 @@ jobs:
         if: runner.os == 'macOS' && matrix.arch == 'arm64'
         shell: bash -l {0}
         run: | # osx-arm64 build of setuptools-conda not available on channel yet
-          conda install "setuptools<69"
           git clone https://github.com/chrisjbillington/setuptools-conda
           cd setuptools-conda/
-          python -m setuptools_conda build .
-          echo "setuptools_conda built from source"
-          ls -R
+          python -m setuptools_conda build --setup-requires='setuptools<69.5,wheel,setuptools_scm,importlib_metadata,distlib,toml,conda-build,conda-verify,ripgrep' .
           conda install conda_packages/arm64/setuptools-conda-*.tar.bz2
-          echo "setuptools-conda installed"
           python make_packages.py ${{ runner.temp }}
 
       - name: Conda package (Unix)
