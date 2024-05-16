@@ -18,6 +18,7 @@ jobs:
     name: Build
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
