@@ -68,7 +68,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Conda package (macOS-arm64)
-        if: runner.os == 'macOS' && runner.arch == 'arm64'
+        if: runner.os == 'macOS' && matrix.arch == 'arm64'
         shell: bash -l {0}
         run: | # osx-arm64 build of setuptools-conda not available on channel yet
           git clone https://github.com/chrisjbillington/setuptools-conda
@@ -81,7 +81,7 @@ jobs:
           python make_packages.py ${{ runner.temp }}
 
       - name: Conda package (Unix)
-        if: runner.os != 'Windows' && runner.arch != 'arm64'
+        if: runner.os != 'Windows' && matrix.arch != 'arm64'
         shell: bash -l {0}
         run: |
           conda install -c labscript-suite setuptools-conda
