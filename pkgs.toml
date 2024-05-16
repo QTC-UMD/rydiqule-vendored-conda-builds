@@ -24,7 +24,7 @@ build_args = ["--license=CC-BY-SA", # override so full license text not used
 platforms = ["osx-arm64", "osx-64"]
 # CC BY-SA 4.0
 
-[numbakit-ode]
+#[numbakit-ode]
 # BSD
 
 [leveldiagram]
