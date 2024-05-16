@@ -67,10 +67,12 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      # setuptools 69(.5.1?) has bug that prevents local build from succeeding
       - name: Conda package (macOS-arm64)
         if: runner.os == 'macOS' && matrix.arch == 'arm64'
         shell: bash -l {0}
         run: | # osx-arm64 build of setuptools-conda not available on channel yet
+          conda install setuptools<69
           git clone https://github.com/chrisjbillington/setuptools-conda
           cd setuptools-conda/
           python -m setuptools_conda build .
