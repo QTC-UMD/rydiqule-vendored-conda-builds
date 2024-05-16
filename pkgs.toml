@@ -31,12 +31,12 @@ platforms = ["osx-arm64", "osx-64"]
 # BSD3
 
 ### available via conda-forge
-[asteval]
+#[asteval]
 # MIT
 
-[lmfit]
-build_args = ['--license=BSD-3']
+#[lmfit]
+#build_args = ['--license=BSD-3']
 # BSD3
 
-[uncertainties]
+#[uncertainties]
 # BSD
