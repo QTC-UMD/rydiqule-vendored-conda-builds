@@ -13,7 +13,7 @@ source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
 build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
               '--from-wheel'] # build is not PEP-517 compatible, better to stick with pip for now
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "osx-64"]
 # BSD3
 
 [CyRK]
@@ -21,7 +21,7 @@ source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-wheel"] # non-standard build, rely on pip
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "osx-64"]
 # CC BY-SA 4.0
 
 [numbakit-ode]
