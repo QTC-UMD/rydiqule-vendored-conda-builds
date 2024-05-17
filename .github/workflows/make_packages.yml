@@ -22,20 +22,22 @@ jobs:
       matrix:
         include:
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
-          #- { os: ubuntu-latest,   python: '3.10',  arch: x64 }
-          #- { os: ubuntu-latest,   python: '3.9',  arch: x64 }
-          #- { os: ubuntu-latest,   python: '3.8',  arch: x64 }
+          - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
+          - { os: ubuntu-latest,   python: '3.9',  arch: x64 }
+          - { os: ubuntu-latest,   python: '3.8',  arch: x64 }
 
-          - { os: macos-13,    python: '3.11',  arch: x64 }
-          #- { os: macos-latest,    python: '3.10',  arch: x64 }
-          #- { os: macos-latest,    python: '3.9',  arch: x64 }
-          #- { os: macos-latest,    python: '3.8',  arch: x64 }
+          - { os: macos-13,        python: '3.11',  arch: x64 }
+          - { os: macos-13,        python: '3.10',  arch: x64 }
+          - { os: macos-13,        python: '3.9',  arch: x64 }
+          - { os: macos-13,        python: '3.8',  arch: x64 }
           - { os: macos-latest,    python: '3.11',  arch: arm64}
+          - { os: macos-latest,    python: '3.10',  arch: arm64}
+          - { os: macos-latest,    python: '3.9',  arch: arm64}
 
-          #- { os: windows-latest,  python: '3.11',  arch: x64 }
-          #- { os: windows-latest,  python: '3.10',  arch: x64 }
-          #- { os: windows-latest,  python: '3.9',  arch: x64 }
-          #- { os: windows-latest,  python: '3.8',  arch: x64 }
+          - { os: windows-latest,  python: '3.11',  arch: x64 }
+          - { os: windows-latest,  python: '3.10',  arch: x64 }
+          - { os: windows-latest,  python: '3.9',  arch: x64 }
+          - { os: windows-latest,  python: '3.8',  arch: x64 }
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
