@@ -76,7 +76,8 @@ jobs:
           git clone https://github.com/chrisjbillington/setuptools-conda
           cd setuptools-conda/
           python -m setuptools_conda build --setup-requires='setuptools<69.5,wheel,setuptools_scm,importlib_metadata,distlib,toml,conda-build,conda-verify,ripgrep' .
-          conda install --offline conda_packages/osx-arm64/setuptools-conda-*.tar.bz2
+          python -m conda_index ./conda_packages
+          conda install conda_packages/osx-arm64/setuptools-conda-*.tar.bz2
           cd ..
           python make_packages.py ${{ runner.temp }}
 
