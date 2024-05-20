@@ -24,7 +24,6 @@ build_args = ["--license=CC-BY-SA", # override so full license text not used
 # CC BY-SA 4.0
 
 [numbakit-ode]
-build_args = ["--from-downloaded-wheel"] # not PEP-517 compatible, don't build locally
 # BSD
 
 [leveldiagram]
