@@ -12,8 +12,7 @@ platforms = ["win-64", "osx-64", "osx-arm64", "linux"]
 source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
 build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
-              '--from-wheel'] # build is not PEP-517 compatible, better to stick with pip for now
-platforms = ["win-64", "osx-64", "linux"]
+              ]
 # BSD3
 
 [CyRK]
