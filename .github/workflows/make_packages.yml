@@ -71,23 +71,15 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      # osx-arm64 build of setuptools-conda not available on channel yet, building locally
       # osx-arm64 needs different compiler args (for CyRK at least)
       - name: Conda package (macOS-arm64)
         if: runner.os == 'macOS' && matrix.arch == 'arm64'
         shell: bash -l {0}
         run: |
           export CC='gcc-13'
-          git clone https://github.com/chrisjbillington/setuptools-conda
-          cd setuptools-conda/
-          python -m setuptools_conda build .
-          python -m conda_index ./conda_packages
-          conda install conda_packages/osx-arm64/setuptools-conda-*.tar.bz2
-          cd ..
-          python make_packages.py ${{ runner.temp }}
 
       - name: Conda package (Unix)
-        if: runner.os != 'Windows' && matrix.arch != 'arm64'
+        if: runner.os != 'Windows'
         shell: bash -l {0}
         run: |
           conda install -c labscript-suite setuptools-conda
