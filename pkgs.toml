@@ -12,7 +12,7 @@ platforms = ["win-64", "osx-64", "osx-arm64", "linux"]
 source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
 build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
-              ]
+              '--from-downloaded-wheel'] # conda-build not working on windows or osx-64
 # BSD3
 
 [CyRK]
