@@ -15,11 +15,11 @@ build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
               '--from-downloaded-wheel'] # conda-build not working on windows or osx-64
 # BSD3
 
-[CyRK]
-source = "git+https://github.com/jrenaud90/CyRK/"
-noarch = false
-build_args = ["--license=CC-BY-SA", # override so full license text not used
-              "--from-wheel"] # non-standard build, use pip wheels
+#[CyRK]
+#source = "git+https://github.com/jrenaud90/CyRK/"
+#noarch = false
+#build_args = ["--license=CC-BY-SA", # override so full license text not used
+#              "--from-wheel"] # non-standard build, use pip wheels
 # CC BY-SA 4.0
 
 [numbakit-ode]
