@@ -71,13 +71,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      # osx-arm64 needs different compiler args (for CyRK at least)
-      - name: Conda package (macOS-arm64)
-        if: runner.os == 'macOS' && matrix.arch == 'arm64'
-        shell: bash -l {0}
-        run: |
-          export CC='gcc-13'
-
       - name: Conda package (Unix)
         if: runner.os != 'Windows'
         shell: bash -l {0}
