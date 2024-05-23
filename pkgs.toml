@@ -19,7 +19,7 @@ build_args = ['--conda-name-differences=oldest-supported-numpy:numpy',
 source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
-              "--from-wheel"] # non-standard build, use pip wheels
+              "--from-downloaded-wheel"] # non-standard build, use pip wheels
 # CC BY-SA 4.0
 
 [numbakit-ode]
