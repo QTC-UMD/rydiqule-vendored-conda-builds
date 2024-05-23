@@ -30,6 +30,6 @@ Please file an [issue](https://github.com/rydiqule/rydiqule-vendored-conda-build
 
 ## Methodology
 
-Whenever a new commit is pushed to this repository, the GitHub Action [`.github/workflows/make_packages.yml`](.github/workflows/make_packages.yml) runs the script [`make_packages.py`](make_packages.py), which executes the build of packages listed in [`pkgs.toml`](pkgs.toml). If the packages build sucessfully and the commit is tagged, the GitHub Action uploads them to the labscript-suite Anaconda Cloud repository. Additionally, the build and upload action is automatically run once per week on the latest tagged commit.
+Whenever a new commit is pushed to this repository, the GitHub Action [`.github/workflows/make_packages.yml`](.github/workflows/make_packages.yml) runs the script [`make_packages.py`](make_packages.py), which executes the build of packages listed in [`pkgs.toml`](pkgs.toml). If the packages build sucessfully and the commit is tagged, the GitHub Action uploads them to the rydiqule Anaconda Cloud repository. Additionally, the build and upload action is automatically run once per week on the latest tagged commit.
 
 This code is based on [vendored-conda-builds](https://github.com/labscript-suite/vendored-conda-builds).
