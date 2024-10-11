@@ -20,6 +20,7 @@ source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-downloaded-wheel"] # non-standard build, use pip wheels
+pythons = ["3.8", "3.9", "3.11", "3.12"] # temporary workaround for 3.10 win build error
 # CC BY-SA 4.0
 
 [numbakit-ode]
