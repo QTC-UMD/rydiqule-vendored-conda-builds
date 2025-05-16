@@ -72,7 +72,7 @@ def download(name, source, version):
 
     # Find it:
     for path in Path(BUILD_DIR).iterdir():
-        if path.stem.rsplit('-', 1)[0] == name:
+        if (path.stem.rsplit('-', 1)[0] == name) or (path.stem.rsplit('-', 1)[0] == name.lower()):
             if path.name.endswith('.zip'):
                 extension = '.zip'
                 break
@@ -80,7 +80,7 @@ def download(name, source, version):
                 extension = '.tar.gz'
                 break
     else:
-        raise RuntimeError("Can't find sdist")
+        raise RuntimeError(f"Can't find sdist for {name}")
 
     # Decompress it:
     base = Path(BUILD_DIR, path.name.rsplit(extension, 1)[0])
