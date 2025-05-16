@@ -61,32 +61,28 @@ jobs:
         shell: bash -l {0}
         run: echo "BUILD_NOARCH=true" >> $GITHUB_ENV
 
-      - name: Install Miniconda
+      - name: Install Miniforge
         uses: conda-incubator/setup-miniconda@v3
         with:
+          miniforge-version: "latest"
           auto-update-conda: true
+          conda-remove-defaults: true
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
-          miniconda-version: "latest"
-          
-      - name: Configure xcode
-        if: runner.os == 'macOS'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
+          activate-environment: true
 
       - name: Conda package (Unix)
         if: runner.os != 'Windows'
         shell: bash -l {0}
         run: |
-          conda install -c labscript-suite setuptools-conda
+          conda install -c labscript-suite setuptools-conda "conda-build<25"
           python make_packages.py ${{ runner.temp }}
 
       - name: Conda Package (Windows)
         if: runner.os == 'Windows'
         shell: cmd /C CALL {0}
         run: |
-          conda install -c labscript-suite setuptools-conda && ^
+          conda install -c labscript-suite setuptools-conda "conda-build<25" && ^
           python make_packages.py ${{ runner.temp }}
 
       - name: Upload Artifact
@@ -108,12 +104,16 @@ jobs:
           path: ./conda_packages
           merge-multiple: true
 
-      - name: Install Miniconda
+      - name: Install Mini
         uses: conda-incubator/setup-miniconda@v3
         with:
+          miniforge-version: "latest"
           auto-update-conda: true
+          conda-remove-defaults: true
+          auto-activate-base: true
+          activate-environment: ""
 
-      - name: Install cloud client
+      - name: Install Anaconda cloud client
         shell: bash -l {0}
         run: conda install anaconda-client
 
