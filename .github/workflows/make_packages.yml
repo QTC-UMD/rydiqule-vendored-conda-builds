@@ -21,25 +21,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          #- { os: ubuntu-latest,   python: '3.13',  arch: x64} conda-build<25 not available
+          - { os: ubuntu-latest,   python: '3.13',  arch: x64}
           - { os: ubuntu-latest,   python: '3.12',  arch: x64}
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
           - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
           - { os: ubuntu-latest,   python: '3.9',  arch: x64 }
 
-          #- { os: macos-13,        python: '3.13',  arch: x64 }
+          - { os: macos-13,        python: '3.13',  arch: x64 }
           - { os: macos-13,        python: '3.12',  arch: x64 }
           - { os: macos-13,        python: '3.11',  arch: x64 }
           - { os: macos-13,        python: '3.10',  arch: x64 }
           - { os: macos-13,        python: '3.9',  arch: x64 }
 
-          #- { os: macos-latest,    python: '3.13',  arch: arm64}
+          - { os: macos-latest,    python: '3.13',  arch: arm64}
           - { os: macos-latest,    python: '3.12',  arch: arm64}
           - { os: macos-latest,    python: '3.11',  arch: arm64}
           - { os: macos-latest,    python: '3.10',  arch: arm64}
           - { os: macos-latest,    python: '3.9',  arch: arm64}
 
-          #- { os: windows-latest,  python: '3.13',  arch: x64 }
+          - { os: windows-latest,  python: '3.13',  arch: x64 }
           - { os: windows-latest,  python: '3.12',  arch: x64 }
           - { os: windows-latest,  python: '3.11',  arch: x64 }
           - { os: windows-latest,  python: '3.10',  arch: x64 }
@@ -76,14 +76,14 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash -l {0}
         run: |
-          conda install -c labscript-suite setuptools-conda "conda-build<25"
+          conda install -c labscript-suite setuptools-conda
           python make_packages.py ${{ runner.temp }}
 
       - name: Conda Package (Windows)
         if: runner.os == 'Windows'
         shell: cmd /C CALL {0}
         run: |
-          conda install -c labscript-suite setuptools-conda "conda-build<25" && ^
+          conda install -c labscript-suite setuptools-conda && ^
           python make_packages.py ${{ runner.temp }}
 
       - name: Upload Artifact
