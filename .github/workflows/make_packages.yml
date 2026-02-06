@@ -27,11 +27,11 @@ jobs:
           - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
           - { os: ubuntu-latest,   python: '3.9',  arch: x64 }
 
-          - { os: macos-13,        python: '3.13',  arch: x64 }
-          - { os: macos-13,        python: '3.12',  arch: x64 }
-          - { os: macos-13,        python: '3.11',  arch: x64 }
-          - { os: macos-13,        python: '3.10',  arch: x64 }
-          - { os: macos-13,        python: '3.9',  arch: x64 }
+          - { os: macos-15-intel,        python: '3.13',  arch: x64 }
+          - { os: macos-15-intel,        python: '3.12',  arch: x64 }
+          - { os: macos-15-intel,        python: '3.11',  arch: x64 }
+          - { os: macos-15-intel,        python: '3.10',  arch: x64 }
+          - { os: macos-15-intel,        python: '3.9',  arch: x64 }
 
           - { os: macos-latest,    python: '3.13',  arch: arm64}
           - { os: macos-latest,    python: '3.12',  arch: arm64}
@@ -70,7 +70,8 @@ jobs:
           conda-remove-defaults: true
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
-          activate-environment: true
+          auto-activate: true
+          activate-environment: ""
 
       - name: Conda package (Unix)
         if: runner.os != 'Windows'
@@ -111,7 +112,7 @@ jobs:
           miniforge-version: "latest"
           auto-update-conda: true
           conda-remove-defaults: true
-          auto-activate-base: true
+          auto-activate: true
           activate-environment: ""
 
       - name: Install Anaconda cloud client
