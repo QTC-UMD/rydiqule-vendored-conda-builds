@@ -8,19 +8,18 @@ pythons = ["3.10", "3.11", "3.12", "3.13"]
 platforms = ["win-64", "osx-arm64", "linux"]
 
 ### only available on PyPI
-[ARC-Alkali-Rydberg-Calculator]
-source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
-noarch = false
-build_args = ['--from-downloaded-wheel'] # conda-build not working on windows
-platforms = ["osx-arm64", "linux"]
-# BSD3
-
 [CyRK]
 source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-downloaded-wheel"] # non-standard build, use pip wheels
 # CC BY-SA 4.0
+
+[ARC-Alkali-Rydberg-Calculator]
+source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
+noarch = false
+build_args = ['--from-downloaded-wheel'] # conda-build not working on windows
+# BSD3
 
 [leveldiagram]
 # BSD3
