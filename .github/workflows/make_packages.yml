@@ -25,19 +25,16 @@ jobs:
           - { os: ubuntu-latest,   python: '3.12',  arch: x64}
           - { os: ubuntu-latest,   python: '3.11',  arch: x64}
           - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
-          - { os: ubuntu-latest,   python: '3.14',  arch: x64 }
 
           - { os: macos-latest,    python: '3.13',  arch: arm64}
           - { os: macos-latest,    python: '3.12',  arch: arm64}
           - { os: macos-latest,    python: '3.11',  arch: arm64}
           - { os: macos-latest,    python: '3.10',  arch: arm64}
-          - { os: macos-latest,    python: '3.14',  arch: arm64}
 
           - { os: windows-latest,  python: '3.13',  arch: x64 }
           - { os: windows-latest,  python: '3.12',  arch: x64 }
           - { os: windows-latest,  python: '3.11',  arch: x64 }
           - { os: windows-latest,  python: '3.10',  arch: x64 }
-          - { os: windows-latest,  python: '3.14',  arch: x64 }
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
