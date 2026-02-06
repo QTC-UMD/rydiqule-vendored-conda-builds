@@ -63,7 +63,6 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
           auto-activate: true
-          activate-environment: true
 
       - name: Conda package (Unix)
         if: runner.os != 'Windows'
