@@ -2,62 +2,53 @@ name: Make and upload Conda packages
 
 on:
   push:
-    branches:
-      - main
-    tags:
-      - '*'
+    branches: [update-workflows]
+    tags: ['*']
   schedule:
-    # - cron: '0-59/5 * * * *' # Every 5 minutes
-    - cron: '13 02 * * 1' # Weekly, 2:13AM Mondays UTC
+    - cron: '13 02 * * 1'   # Weekly, 2:13 AM Mondays UTC
 
 env:
   ANACONDA_USER: rydiqule
 
 jobs:
-  build:
-    name: Build
+
+  # ── Step 1: read pkgs.toml and emit two matrices ───────────────────────────
+  configure:
+    name: Configure build matrices
+    runs-on: ubuntu-latest
+    outputs:
+      arch_matrix:   ${{ steps.gen.outputs.arch_matrix }}
+      noarch_matrix: ${{ steps.gen.outputs.noarch_matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: pip install toml
+      - id: gen
+        run: python .github/workflows/gen_matrix.py >> "$GITHUB_OUTPUT"
+
+  # ── Step 2a: one runner per (package × os × python) ────────────────────────
+  build-arch:
+    name: Build ${{ matrix.name }} – ${{ matrix.os }} py${{ matrix.python }}
+    needs: configure
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - { os: ubuntu-latest,   python: '3.14',  arch: x64}
-          - { os: ubuntu-latest,   python: '3.13',  arch: x64}
-          - { os: ubuntu-latest,   python: '3.12',  arch: x64}
-          - { os: ubuntu-latest,   python: '3.11',  arch: x64}
-          - { os: ubuntu-latest,   python: '3.10',  arch: x64 }
-
-          - { os: macos-latest,    python: '3.14',  arch: arm64}
-          - { os: macos-latest,    python: '3.13',  arch: arm64}
-          - { os: macos-latest,    python: '3.12',  arch: arm64}
-          - { os: macos-latest,    python: '3.11',  arch: arm64}
-          - { os: macos-latest,    python: '3.10',  arch: arm64}
-
-          - { os: windows-latest,  python: '3.14',  arch: x64 }
-          - { os: windows-latest,  python: '3.13',  arch: x64 }
-          - { os: windows-latest,  python: '3.12',  arch: x64 }
-          - { os: windows-latest,  python: '3.11',  arch: x64 }
-          - { os: windows-latest,  python: '3.10',  arch: x64 }
+      matrix: ${{ fromJSON(needs.configure.outputs.arch_matrix) }}
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Checkout latest tag
+      - name: Checkout latest tag (scheduled runs)
         if: github.event_name == 'schedule'
         shell: bash -l {0}
         run: git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
 
-      - name: Set BUILD_NOARCH=true
-        if: strategy.job-index == 0
-        shell: bash -l {0}
-        run: echo "BUILD_NOARCH=true" >> $GITHUB_ENV
-
-      - name: Install Miniforge
-        uses: conda-incubator/setup-miniconda@v4
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: "latest"
           channels: conda-forge
@@ -67,42 +58,83 @@ jobs:
           architecture: ${{ matrix.arch }}
           auto-activate: true
 
-      - name: Conda package (Unix)
+      - name: Build (Unix)
         if: runner.os != 'Windows'
         shell: bash -l {0}
         run: |
           conda install -c labscript-suite setuptools-conda
-          python make_packages.py ${{ runner.temp }}
+          python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
-      - name: Conda Package (Windows)
+      - name: Build (Windows)
         if: runner.os == 'Windows'
         shell: cmd /C CALL {0}
         run: |
           conda install -c labscript-suite setuptools-conda && ^
-          python make_packages.py ${{ runner.temp }}
+          python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v7
-        with: # v4 requires all artifact names are unique on upload
-          name: conda_packages-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conda_packages-${{ matrix.name }}-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.arch }}
           path: ./conda_packages
 
-  upload:
-    name: Upload
+  # ── Step 2b: one runner per noarch package (OS/Python don't matter) ─────────
+  build-noarch:
+    name: Build ${{ matrix.name }} – noarch
+    needs: configure
     runs-on: ubuntu-latest
-    needs: build
-    if: ${{ always() && contains(join(needs.build.result, ','), 'success') }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.configure.outputs.noarch_matrix) }}
+
+    if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
-      
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v8
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout latest tag (scheduled runs)
+        if: github.event_name == 'schedule'
+        shell: bash -l {0}
+        run: git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: "latest"
+          channels: conda-forge
+          auto-update-conda: true
+          conda-remove-defaults: true
+          auto-activate: true
+
+      - name: Build noarch package
+        shell: bash -l {0}
+        run: |
+          conda install -c labscript-suite setuptools-conda
+          python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conda_packages-${{ matrix.name }}-noarch
+          path: ./conda_packages
+
+  # ── Step 3: upload once all build jobs succeed (or at least one did) ────────
+  upload:
+    name: Upload to Anaconda
+    runs-on: ubuntu-latest
+    needs: [build-arch, build-noarch]
+    if: >-
+      always() &&
+      (
+        contains(join(needs.build-arch.result,   ','), 'success') ||
+        contains(join(needs.build-noarch.result, ','), 'success')
+      )
+    steps:
+      - uses: actions/download-artifact@v4
         with:
           pattern: conda_packages-*
           path: ./conda_packages
           merge-multiple: true
 
-      - name: Install Miniconda
-        uses: conda-incubator/setup-miniconda@v4
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: "latest"
           auto-update-conda: true
@@ -114,19 +146,7 @@ jobs:
         shell: bash -l {0}
         run: conda install anaconda-client
 
-      # - name: Publish to Anaconda test label
-      #   if: github.event.ref_type != 'tag' && github.event_name != 'schedule'
-      #   shell: bash -l {0}
-      #   run: |
-      #     anaconda \
-      #       --token ${{ secrets.ANACONDA_API_TOKEN }} \
-      #       upload \
-      #       --user $ANACONDA_USER \
-      #       --label test \
-      #       --skip-existing \
-      #       conda_packages/*/*
-
-      - name: Publish to Anaconda main label
+      - name: Publish to Anaconda (main label)
         if: (github.event_name == 'push' && contains(github.ref, '/tags')) || github.event_name == 'schedule'
         shell: bash -l {0}
         run: |

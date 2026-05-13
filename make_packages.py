@@ -147,6 +147,14 @@ def build_conda_package(name, spec):
 
 
 if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('build_dir', nargs='?', default='build')
+    parser.add_argument('--package', default=None,
+                        help='Only build this specific package (by TOML key)')
+    args = parser.parse_args()
+    BUILD_DIR = args.build_dir  # reassign the module-level var
+
     Path(BUILD_DIR).mkdir(exist_ok=True)
     packages = toml.load('pkgs.toml')
     defaults = packages['defaults']
@@ -154,5 +162,6 @@ if __name__ == '__main__':
     for name, spec in packages.items():
         if name == 'defaults':
             continue
-
+        if args.package and name != args.package:
+            continue
         build_conda_package(name, spec)
