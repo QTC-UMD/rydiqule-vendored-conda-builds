@@ -42,7 +42,7 @@ jobs:
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -57,7 +57,7 @@ jobs:
         run: echo "BUILD_NOARCH=true" >> $GITHUB_ENV
 
       - name: Install Miniforge
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: "latest"
           channels: conda-forge
@@ -82,7 +82,7 @@ jobs:
           python make_packages.py ${{ runner.temp }}
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with: # v4 requires all artifact names are unique on upload
           name: conda_packages-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.arch }}
           path: ./conda_packages
@@ -95,14 +95,14 @@ jobs:
     steps:
       
       - name: Download All Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: conda_packages-*
           path: ./conda_packages
           merge-multiple: true
 
-      - name: Install Mini
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Install Miniconda
+        uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: "latest"
           auto-update-conda: true
