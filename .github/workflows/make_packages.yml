@@ -20,7 +20,7 @@ jobs:
       arch_matrix:   ${{ steps.gen.outputs.arch_matrix }}
       noarch_matrix: ${{ steps.gen.outputs.noarch_matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
@@ -39,7 +39,7 @@ jobs:
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -48,7 +48,7 @@ jobs:
         shell: bash -l {0}
         run: git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
 
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: "latest"
           channels: conda-forge
@@ -72,7 +72,7 @@ jobs:
           conda install -c labscript-suite setuptools-conda && ^
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: conda_packages-${{ matrix.name }}-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.arch }}
           path: ./conda_packages
@@ -88,7 +88,7 @@ jobs:
 
     if: github.repository == 'QTC-UMD/rydiqule-vendored-conda-builds'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -97,7 +97,7 @@ jobs:
         shell: bash -l {0}
         run: git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
 
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: "latest"
           channels: conda-forge
@@ -111,7 +111,7 @@ jobs:
           conda install -c labscript-suite setuptools-conda
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: conda_packages-${{ matrix.name }}-noarch
           path: ./conda_packages
@@ -128,13 +128,13 @@ jobs:
         contains(join(needs.build-noarch.result, ','), 'success')
       )
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: conda_packages-*
           path: ./conda_packages
           merge-multiple: true
 
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: "latest"
           auto-update-conda: true
