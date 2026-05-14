@@ -58,6 +58,7 @@ def download(name, source, version):
         download_cmd = [
             'pip',
             'download',
+            '-v',
             '--no-binary=:all:',
             '--no-build-isolation',
             '--no-deps',
