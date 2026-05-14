@@ -58,18 +58,21 @@ jobs:
           architecture: ${{ matrix.arch }}
           auto-activate: true
 
+      - name: Install setuptools-conda
+        shell: bash -l {0}
+        run: |
+          conda install -c labscript-suite setuptools-conda
+
       - name: Build (Unix)
         if: runner.os != 'Windows'
         shell: bash -l {0}
         run: |
-          conda install -c labscript-suite setuptools-conda
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
         shell: cmd /C CALL {0}
         run: |
-          conda install -c labscript-suite setuptools-conda && ^
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - uses: actions/upload-artifact@v7
@@ -105,10 +108,14 @@ jobs:
           conda-remove-defaults: true
           auto-activate: true
 
-      - name: Build noarch package
+      - name: Install setuptools-conda
         shell: bash -l {0}
         run: |
           conda install -c labscript-suite setuptools-conda
+
+      - name: Build noarch package
+        shell: bash -l {0}
+        run: |
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - uses: actions/upload-artifact@v7

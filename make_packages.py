@@ -111,6 +111,9 @@ def build_conda_package(name, spec):
         if PY not in pythons:
             print(f"Skipping {name} as {PY} is not in its list of Python versions")
             return
+        
+    print(f'=====> Building {name:s} with options:')
+    print(f'\t\t{version=}\n\t\t{source=}\n\t\t{build_args=}\n\t\t{noarch=}\n\t\t{pythons=}\n\t\t{platforms=}')
 
     # Download it:
     project_dir = download(name, source, version)
