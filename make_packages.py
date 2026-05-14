@@ -102,10 +102,7 @@ def build_conda_package(name, spec):
     pythons = spec.get('pythons', defaults['pythons'])
     platforms = spec.get('platforms', defaults['platforms'])
 
-    if noarch and not os.getenv('BUILD_NOARCH'):
-        print(f"Skipping {name} as it is noarch but BUILD_NOARCH env var is not set")
-        return
-    elif not noarch:
+    if not noarch:
         if PLATFORM not in platforms:
             print(f"Skipping {name} as {PLATFORM} is not in its list of platforms")
             return
