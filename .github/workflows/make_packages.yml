@@ -71,7 +71,7 @@ jobs:
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
-        shell: cmd /C CALL {0}
+        shell: pwsh
         run: |
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
