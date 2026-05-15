@@ -13,13 +13,14 @@ source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-downloaded-wheel", # non-standard build, use pip wheels
-              "--conda-name-differences=python:python-gil"] # python-gil ensures free-threaded python not grabbed
+              "--conda-name-differences=python:python-gil"] # python-gil ensures free-threaded python not grabbed by dependency
 # CC BY-SA 4.0
 
 [ARC-Alkali-Rydberg-Calculator]
 source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
-build_args = ['--from-downloaded-wheel'] # conda-build not working on windows
+build_args = ['--from-downloaded-wheel', # conda-build not working on windows
+              "--conda-name-differences=python:python-gil"] # python-gil ensures free-threaded python not grabbed by dependency
 # BSD3
 
 [leveldiagram]
