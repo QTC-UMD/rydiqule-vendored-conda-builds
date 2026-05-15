@@ -70,16 +70,14 @@ jobs:
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - name: Trim Windows Path
+        # necessary to keep the conda build command short enough to run when building arc
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           $pathArray = $env:PATH -split ';'
 
           Write-Host "Original PATH length: $($env:PATH.Length)"
-          Write-Host "Total Number of Entries: $($pathArray.Count)"
-          Write-Host "`nDirectory List:"
-          $pathArray | Select-Object @{Name="Length"; Expression={$_.Length}}, @{Name="Path"; Expression={$_}} | Sort-Object Length -Descending | Format-Table -AutoSize
-
+          
           # Define patterns to exclude
           $filteredPath = $pathArray | Where-Object {
             $_ -notmatch "MongoDB" -and
@@ -97,12 +95,15 @@ jobs:
           echo "PATH=$newPath" >> $env:GITHUB_ENV
 
           Write-Host "Trimmed PATH length: $($newPath.Length)"
+          Write-Host "Total Number of Entries: $($filteredPath.Count)"
+          Write-Host "`nDirectory List:"
+          $filteredPath | Select-Object @{Name="Length"; Expression={$_.Length}}, @{Name="Path"; Expression={$_}} | Sort-Object Length -Descending | Format-Table -AutoSize
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Write-Host "Current PATH length: $($env:PATH.Length): $($env:PATH)"
+          Write-Host "Current PATH length: $($env:PATH.Length)"
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - uses: actions/upload-artifact@v7
