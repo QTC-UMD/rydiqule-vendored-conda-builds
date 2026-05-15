@@ -2,7 +2,7 @@ name: Make and upload Conda packages
 
 on:
   push:
-    branches: [update-workflows]
+    branches: [main]
     tags: ['*']
   schedule:
     - cron: '13 02 * * 1'   # Weekly, 2:13 AM Mondays UTC
