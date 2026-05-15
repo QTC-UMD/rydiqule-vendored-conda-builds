@@ -85,7 +85,9 @@ jobs:
             $_ -notmatch "MongoDB" -and
             $_ -notmatch "ImageMagick" -and
             $_ -notmatch "Java" -and
-            $_ -notmatch "SQL Server"
+            $_ -notmatch "SQL Server" -and
+            $_ -notmatch "Chocolatey" -and
+            $_ -notmatch "MySQL"
           }
 
           $newPath = $filteredPath -join ';'
@@ -100,6 +102,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          Write-Host "Current PATH length: $($env:PATH.Length): $($env:PATH)"
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
       - uses: actions/upload-artifact@v7
