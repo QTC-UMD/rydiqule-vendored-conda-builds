@@ -12,7 +12,8 @@ platforms = ["win-64", "osx-arm64", "linux"]
 source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
-              "--from-downloaded-wheel"] # non-standard build, use pip wheels
+              "--from-downloaded-wheel", # non-standard build, use pip wheels
+              "--conda-name-differences=python:python-gil"] # python-gil ensures free-threaded python not grabbed
 # CC BY-SA 4.0
 
 [ARC-Alkali-Rydberg-Calculator]
