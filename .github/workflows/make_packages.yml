@@ -69,6 +69,28 @@ jobs:
         run: |
           python make_packages.py ${{ runner.temp }} --package "${{ matrix.name }}"
 
+      - name: Trim Windows Path
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $pathArray = $env:PATH -split ';'
+
+          # Define patterns to exclude
+          $filteredPath = $pathArray | Where-Object {
+            $_ -notmatch "Chocolatey" -and
+            $_ -notmatch "Android" -and
+            $_ -notmatch "SQL Server"
+          }
+
+          $newPath = $filteredPath -join ';'
+
+          # Apply to current session and export for following steps
+          $env:PATH = $newPath
+          echo "PATH=$newPath" >> $env:GITHUB_ENV
+
+          Write-Host "Original PATH length: $($env:PATH.Length)"
+          Write-Host "Trimmed PATH length: $($newPath.Length)"
+
       - name: Build (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
