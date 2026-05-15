@@ -77,9 +77,9 @@ jobs:
 
           # Define patterns to exclude
           $filteredPath = $pathArray | Where-Object {
-            $_ -notmatch "Chocolatey" -and
-            $_ -notmatch "Android" -and
-            $_ -notmatch "SQL Server"
+            $_ -notmatch "MongoDB" -and
+            $_ -notmatch "ImageMagick" -and
+            $_ -notmatch "Java"
           }
 
           $newPath = $filteredPath -join ';'
@@ -90,6 +90,10 @@ jobs:
 
           Write-Host "Original PATH length: $($env:PATH.Length)"
           Write-Host "Trimmed PATH length: $($newPath.Length)"
+          Write-Host "Total Number of Entries: $($newPath.Count)"
+          Write-Host "`nDirectory List:"
+
+          $pathArray | Select-Object @{Name="Length"; Expression={$_.Length}}, @{Name="Path"; Expression={$_}} | Sort-Object Length -Descending | Format-Table -AutoSize
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
