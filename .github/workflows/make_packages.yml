@@ -75,11 +75,17 @@ jobs:
         run: |
           $pathArray = $env:PATH -split ';'
 
+          Write-Host "Original PATH length: $($env:PATH.Length)"
+          Write-Host "Total Number of Entries: $($pathArray.Count)"
+          Write-Host "`nDirectory List:"
+          $pathArray | Select-Object @{Name="Length"; Expression={$_.Length}}, @{Name="Path"; Expression={$_}} | Sort-Object Length -Descending | Format-Table -AutoSize
+
           # Define patterns to exclude
           $filteredPath = $pathArray | Where-Object {
             $_ -notmatch "MongoDB" -and
             $_ -notmatch "ImageMagick" -and
-            $_ -notmatch "Java"
+            $_ -notmatch "Java" -and
+            $_ -notmatch "SQL Server"
           }
 
           $newPath = $filteredPath -join ';'
@@ -88,12 +94,7 @@ jobs:
           $env:PATH = $newPath
           echo "PATH=$newPath" >> $env:GITHUB_ENV
 
-          Write-Host "Original PATH length: $($env:PATH.Length)"
           Write-Host "Trimmed PATH length: $($newPath.Length)"
-          Write-Host "Total Number of Entries: $($newPath.Count)"
-          Write-Host "`nDirectory List:"
-
-          $pathArray | Select-Object @{Name="Length"; Expression={$_.Length}}, @{Name="Path"; Expression={$_}} | Sort-Object Length -Descending | Format-Table -AutoSize
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
