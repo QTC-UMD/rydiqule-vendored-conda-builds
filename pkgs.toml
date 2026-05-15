@@ -13,7 +13,7 @@ source = "git+https://github.com/jrenaud90/CyRK/"
 noarch = false
 build_args = ["--license=CC-BY-SA", # override so full license text not used
               "--from-downloaded-wheel", # non-standard build, use pip wheels
-              '--setup-requires="cython>=3.0.0","numpy<2.4",python-gil', # python-gil ensures free-threaded python not grabbed by dependency
+              '--setup-requires=cython>=3.0.0,numpy<2.4,python-gil', # python-gil ensures free-threaded python not grabbed by dependency
               "--ignore-run-exports=python,numpy"] # prevents runtime dependencies being hash locked
               
 # CC BY-SA 4.0
@@ -22,7 +22,7 @@ build_args = ["--license=CC-BY-SA", # override so full license text not used
 source = "git+https://github.com/nikolasibalic/ARC-Alkali-Rydberg-Calculator/"
 noarch = false
 build_args = ['--from-downloaded-wheel', # conda-build not working on windows
-              "--setup-requires='numpy>=2.0.0',python-gil", # python-gil ensures free-threaded python not grabbed by dependency
+              "--setup-requires=numpy>=2.0.0,python-gil", # python-gil ensures free-threaded python not grabbed by dependency
               "--ignore-run-exports=python,numpy,libstdcxx"]
 # BSD3
 
