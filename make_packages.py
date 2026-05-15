@@ -58,6 +58,7 @@ def download(name, source, version):
         download_cmd = [
             'pip',
             'download',
+            '-v',
             '--no-binary=:all:',
             '--no-build-isolation',
             '--no-deps',
@@ -102,10 +103,7 @@ def build_conda_package(name, spec):
     pythons = spec.get('pythons', defaults['pythons'])
     platforms = spec.get('platforms', defaults['platforms'])
 
-    if noarch and not os.getenv('BUILD_NOARCH'):
-        print(f"Skipping {name} as it is noarch but BUILD_NOARCH env var is not set")
-        return
-    elif not noarch:
+    if not noarch:
         if PLATFORM not in platforms:
             print(f"Skipping {name} as {PLATFORM} is not in its list of platforms")
             return
@@ -114,6 +112,9 @@ def build_conda_package(name, spec):
         if PY not in pythons:
             print(f"Skipping {name} as {PY} is not in its list of Python versions")
             return
+        
+    print(f'=====> Building {name:s} with options:')
+    print(f'\t\t{version=}\n\t\t{source=}\n\t\t{build_args=}\n\t\t{noarch=}\n\t\t{pythons=}\n\t\t{platforms=}')
 
     # Download it:
     project_dir = download(name, source, version)
@@ -147,6 +148,14 @@ def build_conda_package(name, spec):
 
 
 if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('build_dir', nargs='?', default='build')
+    parser.add_argument('--package', default=None,
+                        help='Only build this specific package (by TOML key)')
+    args = parser.parse_args()
+    BUILD_DIR = args.build_dir  # reassign the module-level var
+
     Path(BUILD_DIR).mkdir(exist_ok=True)
     packages = toml.load('pkgs.toml')
     defaults = packages['defaults']
@@ -154,5 +163,6 @@ if __name__ == '__main__':
     for name, spec in packages.items():
         if name == 'defaults':
             continue
-
+        if args.package and name != args.package:
+            continue
         build_conda_package(name, spec)
